@@ -1,4 +1,6 @@
 #:import utils kivy.utils
+#:set couleur_orange "#DD7835"
+#:set couleur_gris "#C8C8C8"
 
 MainWidget:
 
@@ -8,13 +10,14 @@ MainWidget:
         id: IdRecycleView
         viewclass: 'PizzaWidget'
         RecycleBoxLayout:
-            default_size: None, dp(100)
+            default_size: None, dp(56)
             default_size_hint: 1, None
             size_hint_y: None
             height: self.minimum_height
             orientation: 'vertical'
+            spacing: "16dp"
 
-<LeftAlignedLabel@Label+RandomBackgroudColor>:
+<LeftAlignedLabel@Label>:
     text_size: self.size
     halign: 'left'
     valign: 'middle'
@@ -48,14 +51,17 @@ MainWidget:
         orientation: "vertical"
         BoxLayout:
             spacing: "10dp"
-            FitLabel:
+            FitLabel:   # NOM
                 text: root.nom
-            BadgeVege:
+                font_size: "22dp"
+                bold: True
+            BadgeVege:   # VEGETARIENNE
                 text: 'VÉGÉTARIENNE' if root.vegetarienne else ''
-        LeftAlignedLabel:
+        LeftAlignedLabel:   # INGREDIENTS
             text: root.ingredients
-    Label:
+            color: utils.get_color_from_hex(couleur_gris)
+    FitLabel:   # Prix
         text: str(root.prix) + "€"
-        text_size: self.size
-        halign: 'right'
-        valign: 'middle'
+        font_size: "20dp"
+        color: utils.get_color_from_hex(couleur_orange)
+
