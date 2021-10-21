@@ -8,19 +8,48 @@ MainWidget:
     proprieteRecycleView: IdRecycleView
     CoverImage:
         source: "images/menu_background.jpg"
-    RecycleView:
-        id: IdRecycleView
-        viewclass: 'PizzaWidget'
-        RecycleBoxLayout:
-            default_size: None, dp(56)
-            default_size_hint: 1, None
-            size_hint_y: None
-            height: self.minimum_height
-            orientation: 'vertical'
-            spacing: "16dp"
+        canvas:
+            Color:
+                rgba: 0, 0, 0, 0.6
+            Rectangle:
+                size: self.size
+                pos: self.pos
+    BoxLayout
+        orientation: "vertical"
+        Image:
+            source: "images/small_logo.png"
+            size_hint: None, None
+            size: "150dp", "60dp"
+            allow_stretch: True
+            pos_hint: {"center_x": .5}
+        TitleLabel:
+            text: "Les pizzas"
+        BoxLayout:
+            padding: "20dp", "20dp"
+            RecycleView:
+                id: IdRecycleView
+                viewclass: 'PizzaWidget'
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    spacing: "16dp"
 
 <CoverImage@CoverBehavior+Image>:
     reference_size: self.texture_size
+
+<TitleLabel@FitLabel>
+    font_size: "22dp"
+    bold: True
+    padding: "16dp", "3dp"
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex(couleur_orange)
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <LeftAlignedLabel@Label>:
     text_size: self.size
@@ -54,6 +83,8 @@ MainWidget:
 <PizzaWidget>:   #BoxLayout
     BoxLayout:
         orientation: "vertical"
+        size_hint_max_x: "300dp"
+        size_hint_min_x: "150dp"
         BoxLayout:
             spacing: "10dp"
             FitLabel:   # NOM
@@ -69,4 +100,5 @@ MainWidget:
         text: str(root.prix) + "€"
         font_size: "20dp"
         color: utils.get_color_from_hex(couleur_orange)
+        pos_hint: {"top": .9}
 
