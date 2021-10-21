@@ -1,3 +1,5 @@
+#:import utils kivy.utils
+
 MainWidget:
 
 <MainWidget>:   # BoxLayout
@@ -6,18 +8,43 @@ MainWidget:
         id: IdRecycleView
         viewclass: 'PizzaWidget'
         RecycleBoxLayout:
-            default_size: None, dp(56)
+            default_size: None, dp(100)
             default_size_hint: 1, None
             size_hint_y: None
             height: self.minimum_height
             orientation: 'vertical'
 
+<LeftAlignedLabel@Label+RandomBackgroudColor>:
+    text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+
+<FitLabel@Label+RandomBackgroudColor>:
+    size_hint: None, None
+    size: self.texture_size
+
+<RandomBackgroudColor@Widget>:
+    canvas.before:
+        Color:
+            rgb: utils.get_random_color()
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
 <PizzaWidget>:   #BoxLayout
-    Label:
-        text: root.nom
-    Label:
-        text: root.ingredients
+    BoxLayout:
+        orientation: "vertical"
+        BoxLayout:
+            spacing: "10dp"
+            FitLabel:
+                text: root.nom
+            FitLabel:
+                text: 'VÉGÉTARIENNE' if root.vegetarienne else ''
+        LeftAlignedLabel:
+            text: root.ingredients
     Label:
         text: str(root.prix) + "€"
-    Label:
-        text: str(root.vegetarienne)
+        text_size: self.size
+        halign: 'right'
+        valign: 'middle'

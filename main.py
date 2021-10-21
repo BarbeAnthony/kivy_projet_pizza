@@ -32,9 +32,7 @@ class MainWidget(BoxLayout):
         }
 
     def on_parent(self, widget, parent):
-        liste_pizzas = []
-        for pizza in self.pizzas:
-            liste_pizzas.append(self.construire_dictionnaire(pizza))
+        liste_pizzas = [self.construire_dictionnaire(pizza) for pizza in self.pizzas]
         liste_pizzas.sort(key=operator.itemgetter("prix"))
         self.proprieteRecycleView.data = liste_pizzas
 
