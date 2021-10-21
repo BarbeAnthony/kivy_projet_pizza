@@ -4,8 +4,10 @@
 
 MainWidget:
 
-<MainWidget>:   # BoxLayout
+<MainWidget>:
     proprieteRecycleView: IdRecycleView
+    CoverImage:
+        source: "images/menu_background.jpg"
     RecycleView:
         id: IdRecycleView
         viewclass: 'PizzaWidget'
@@ -16,6 +18,9 @@ MainWidget:
             height: self.minimum_height
             orientation: 'vertical'
             spacing: "16dp"
+
+<CoverImage@CoverBehavior+Image>:
+    reference_size: self.texture_size
 
 <LeftAlignedLabel@Label>:
     text_size: self.size
