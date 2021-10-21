@@ -1,3 +1,23 @@
 MainWidget:
 
-<MainWidget>:
+<MainWidget>:   # BoxLayout
+    proprieteRecycleView: IdRecycleView
+    RecycleView:
+        id: IdRecycleView
+        viewclass: 'PizzaWidget'
+        RecycleBoxLayout:
+            default_size: None, dp(56)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+
+<PizzaWidget>:   #BoxLayout
+    Label:
+        text: root.nom
+    Label:
+        text: root.ingredients
+    Label:
+        text: str(root.prix) + "€"
+    Label:
+        text: str(root.vegetarienne)
