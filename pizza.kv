@@ -19,9 +19,20 @@ MainWidget:
     halign: 'left'
     valign: 'middle'
 
-<FitLabel@Label+RandomBackgroudColor>:
+<FitLabel@Label>:
     size_hint: None, None
     size: self.texture_size
+
+<BadgeVege@FitLabel>:
+    color: 0, 0, 0
+    font_size: "10dp"
+    bold: True
+    padding: "8dp", "3dp"
+    canvas.before:
+        Rectangle:
+            source: "images/badge.png"
+            size: self.size
+            pos: self.pos
 
 <RandomBackgroudColor@Widget>:
     canvas.before:
@@ -39,7 +50,7 @@ MainWidget:
             spacing: "10dp"
             FitLabel:
                 text: root.nom
-            FitLabel:
+            BadgeVege:
                 text: 'VÉGÉTARIENNE' if root.vegetarienne else ''
         LeftAlignedLabel:
             text: root.ingredients
