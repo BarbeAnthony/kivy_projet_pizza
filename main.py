@@ -5,14 +5,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.behaviors import CoverBehavior
 
+from http_client import HttpClient
 from models import Pizza
-
-
-class PizzaWidget(BoxLayout):
-    nom = StringProperty("")
-    ingredients = StringProperty("")
-    prix = NumericProperty(0.0)
-    vegetarienne = BooleanProperty(False)
 
 
 class MainWidget(FloatLayout):
@@ -20,24 +14,18 @@ class MainWidget(FloatLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.pizzas=[
-            Pizza("4 fromages", "chèvre, comté, emmental, brie", 9.5, True),
-            Pizza("Chorizo", "tomates, chorizo, parmesan", 11.2, False),
-            Pizza("Calzone", "fromage, jambon, champignons", 10, False),
-        ]
+        HttpClient().get_pizzas(self.on_server_data)
 
-    def construire_dictionnaire(self, pizza):
-        return {
-            "nom": pizza.nom,
-            "ingredients": pizza.ingredients,
-            "prix": pizza.prix,
-            "vegetarienne": pizza.vegetarienne
-        }
+    def on_server_data(self, pizzas_dict):
+        pizzas_dict.sort(key=operator.itemgetter("prix"))
+        self.proprieteRecycleView.data = pizzas_dict
 
-    def on_parent(self, widget, parent):
-        liste_pizzas = [self.construire_dictionnaire(pizza) for pizza in self.pizzas]
-        liste_pizzas.sort(key=operator.itemgetter("prix"))
-        self.proprieteRecycleView.data = liste_pizzas
+
+class PizzaWidget(BoxLayout):
+    nom = StringProperty("")
+    ingredients = StringProperty("")
+    prix = NumericProperty(0.0)
+    vegetarienne = BooleanProperty(False)
 
 
 class PizzaApp(App):
