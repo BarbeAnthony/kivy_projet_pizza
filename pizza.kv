@@ -36,6 +36,18 @@ MainWidget:
                     height: self.minimum_height
                     orientation: 'vertical'
                     spacing: "16dp"
+        Label: #BANDEAU ERREUR
+            text: root.error_str
+            font_size: "12dp"
+            bold: True
+            size_hint: 1, None
+            height: "0dp" if root.error_str == "" else "30dp"
+            canvas.before:
+                Color:
+                    rgb: 1, 0, 0
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
 <CoverImage@CoverBehavior+Image>:
     reference_size: self.texture_size

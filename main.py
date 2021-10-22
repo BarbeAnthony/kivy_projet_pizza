@@ -11,14 +11,18 @@ from models import Pizza
 
 class MainWidget(FloatLayout):
     proprieteRecycleView = ObjectProperty(None)
+    error_str = StringProperty("")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        HttpClient().get_pizzas(self.on_server_data)
+        HttpClient().get_pizzas(self.on_server_data, self.on_server_error)
 
     def on_server_data(self, pizzas_dict):
         pizzas_dict.sort(key=operator.itemgetter("prix"))
         self.proprieteRecycleView.data = pizzas_dict
+
+    def on_server_error(self, error):
+        self.error_str = "ERREUR : " + error
 
 
 class PizzaWidget(BoxLayout):
