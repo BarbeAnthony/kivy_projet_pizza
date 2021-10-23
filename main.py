@@ -7,6 +7,7 @@ from kivy.uix.behaviors import CoverBehavior
 
 from http_client import HttpClient
 from models import Pizza
+from storage_manager import StorageManager
 
 
 class MainWidget(FloatLayout):
@@ -19,10 +20,16 @@ class MainWidget(FloatLayout):
 
     def on_server_data(self, pizzas_dict):
         pizzas_dict.sort(key=operator.itemgetter("prix"))
+        StorageManager().save_datas("pizzas", pizzas_dict)
         self.proprieteRecycleView.data = pizzas_dict
 
     def on_server_error(self, error):
         self.error_str = "ERREUR : " + error
+
+    def on_parent(self, widget, parent):
+        pizzas_dict = StorageManager().load_datas("pizzas")
+        if pizzas_dict:
+            self.proprieteRecycleView.data = pizzas_dict
 
 
 class PizzaWidget(BoxLayout):

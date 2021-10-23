@@ -109,7 +109,7 @@ MainWidget:
             text: root.ingredients
             color: utils.get_color_from_hex(couleur_gris)
     FitLabel:   # Prix
-        text: str(root.prix) + "€"
+        text: "%.2f" % root.prix + "€"
         font_size: "20dp"
         color: utils.get_color_from_hex(couleur_orange)
         pos_hint: {"top": .9}
